@@ -96,3 +96,30 @@ OUTPUT :           0 a: xxx s: x out: x
                   10 a: 122 s: 3 out: 0
                   15 a: 122 s: 5 out: 0
                   20 a: 122 s: 7 out: 0
+MUX 16:1 :
+module mux16(
+    input [15:0] in,
+    input [3:0] sel,
+    output out
+    );
+    assign out = in[sel];
+endmodule
+TESTBENCH : 
+module mux16_tb();
+reg [15:0]a;reg [3:0]s;wire o;
+mux16 m(.in(a),.sel(s),.out(o));
+initial
+begin
+$dumpfile("mux16.vcd");
+$dumpvars(0,mux16_tb);
+$monitor($time," a: %h s: %h o: %b",a,s,o);
+#10 a=16'hd6b8; s=4'h5;
+#5 s=4'h8;
+#5 s=4'hf;
+#5 $finish;
+end
+endmodule
+OUTPUT :           0 a: xxxx s: x o: x
+                  10 a: d6b8 s: 5 o: 1
+                  15 a: d6b8 s: 8 o: 0
+                  20 a: d6b8 s: f o: 1
