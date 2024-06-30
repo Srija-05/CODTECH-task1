@@ -1,4 +1,5 @@
 # CODTECH-task1
+LOGIC GATES :
 module gates(
     input a,
     input b,
@@ -13,6 +14,7 @@ module gates(
     assign y7=~a;
 endmodule
 ![image](https://github.com/Srija-05/CODTECH-task1/assets/173922039/7c1b4891-3ac8-46d0-85d8-abda47467586)
+HALF AND FULL ADDER :
 module adder(
     input a,
     input b,
@@ -30,6 +32,7 @@ module adder(
     or (cf,t1,t2,t3);
 endmodule
 ![hafa](https://github.com/Srija-05/CODTECH-task1/assets/173922039/abfeb2a2-7f8a-4fd5-8890-92d63e5a0453)
+MUX 2:1 :
 module mux2(
     input a,
     input b,
@@ -46,6 +49,7 @@ module mux2(
     end
 endmodule
 ![image](https://github.com/Srija-05/CODTECH-task1/assets/173922039/9a827692-a298-41f8-92f8-adf76be82b54)
+MUX 4:1 :
 module mux4(
     input [1:0] a,
     input [1:0] b,
@@ -66,3 +70,29 @@ module mux4(
     end
 endmodule
 ![image](https://github.com/Srija-05/CODTECH-task1/assets/173922039/e3f1cf65-ac85-4218-a1d6-e3275b7d29e8)
+MUX 8:1 :
+module mux8(
+input [7:0] in,
+input [2:0] sel,
+output out);
+    assign out = in[sel];
+endmodule
+TESTBENCH : 
+module mux8_tb();
+reg [7:0]a; reg [2:0]s; wire o;
+mux8 m(.in(a),.sel(s),.out(o));
+initial
+begin
+$dumpfile("mux8.vcd");
+$dumpvars(0,mux8_tb);
+$monitor($time," a: %o s: %o out: %b",a,s,o);
+#10 a=8'h52; s=3'b011;
+#5 s=3'b101;
+#5 s=3'b111;
+#5 $finish;
+end
+endmodule
+OUTPUT :           0 a: xxx s: x out: x
+                  10 a: 122 s: 3 out: 0
+                  15 a: 122 s: 5 out: 0
+                  20 a: 122 s: 7 out: 0
