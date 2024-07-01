@@ -5,13 +5,13 @@ module gates(
     input b,
     output y1,y2,y3,y4,y5,y6,y7
     );
-    assign y1=a&b;
-    assign y2=a|b;
-    assign y3=a^b;
-    assign y4=~(a&b);
-    assign y5=~(a|b);
-    assign y6=a~^b;
-    assign y7=~a;
+    assign y1=a&b; // AND gate
+    assign y2=a|b; // OR gate
+    assign y3=a^b; // XOR gate
+    assign y4=~(a&b); // NAND gate
+    assign y5=~(a|b); // NOR gate
+    assign y6=a~^b; // XNOR gate
+    assign y7=~a; // NOT gate
 endmodule
 ![image](https://github.com/Srija-05/CODTECH-task1/assets/173922039/7c1b4891-3ac8-46d0-85d8-abda47467586)
 HALF AND FULL ADDER :
@@ -19,9 +19,9 @@ module adder(
     input a,
     input b,
     input c,
-    output sh,
-    output sf,
-    output cf
+    output sh, // half adder sum
+    output sf, // full adder sum
+    output cf // full adder carry
     );
     wire t1,t2,t3;
     xor (sh,a,b);
@@ -36,14 +36,14 @@ MUX 2:1 :
 module mux2(
     input a,
     input b,
-    input s,
+    input s, 
     output reg o
     );
     always@(*)
     begin
-    case(s)
-    1'b0 : o = a;
-    1'b1 : o = b;
+    case(s) // select line
+    1'b0 : o = a; // output 
+    1'b1 : o = b; // output
     default : o = a;
     endcase
     end
@@ -60,7 +60,7 @@ module mux4(
     );
     always@(*)
     begin
-    case(s)
+    case(s) // select line
     2'b00 : o = a;
     2'b01 : o = b;
     2'b10 : o = c;
@@ -79,14 +79,16 @@ output out);
 endmodule
 TESTBENCH : 
 module mux8_tb();
-reg [7:0]a; reg [2:0]s; wire o;
-mux8 m(.in(a),.sel(s),.out(o));
+reg [7:0]a; // 8-bit input
+reg [2:0]s; // 3-bit selection line
+wire o; // output
+mux8 m(.in(a),.sel(s),.out(o)); // explicit module instantiation
 initial
 begin
-$dumpfile("mux8.vcd");
-$dumpvars(0,mux8_tb);
-$monitor($time," a: %o s: %o out: %b",a,s,o);
-#10 a=8'h52; s=3'b011;
+$dumpfile("mux8.vcd"); // dumping module file
+$dumpvars(0,mux8_tb); // dumping variables
+$monitor($time," a: %o s: %o out: %b",a,s,o); // displaying output
+#10 a=8'h52; s=3'b011; // assigning values
 #5 s=3'b101;
 #5 s=3'b111;
 #5 $finish;
@@ -106,14 +108,16 @@ module mux16(
 endmodule
 TESTBENCH : 
 module mux16_tb();
-reg [15:0]a;reg [3:0]s;wire o;
-mux16 m(.in(a),.sel(s),.out(o));
+reg [15:0]a; // 16-bit input
+reg [3:0]s; // 4-bit selection line
+wire o; // output
+mux16 m(.in(a),.sel(s),.out(o)); // explicit module instantiation
 initial
 begin
-$dumpfile("mux16.vcd");
-$dumpvars(0,mux16_tb);
-$monitor($time," a: %h s: %h o: %b",a,s,o);
-#10 a=16'hd6b8; s=4'h5;
+$dumpfile("mux16.vcd"); // dumping module file
+$dumpvars(0,mux16_tb); // dumping variables
+$monitor($time," a: %h s: %h o: %b",a,s,o); // displaying output
+#10 a=16'hd6b8; s=4'h5; // assigning values
 #5 s=4'h8;
 #5 s=4'hf;
 #5 $finish;
